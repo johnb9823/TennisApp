@@ -1,5 +1,6 @@
 package com.example.tennisapp.domain.board.entity;
 
+import com.example.tennisapp.domain.member.entity.Member;
 import com.example.tennisapp.global.common.BaseEntity;
 
 import jakarta.persistence.Column;

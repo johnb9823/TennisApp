@@ -1,9 +1,14 @@
 package com.example.tennisapp.domain.court.entity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.example.tennisapp.domain.court.enums.CourtType;
+import com.example.tennisapp.domain.courtImage.entity.CourtImage;
+import com.example.tennisapp.domain.owner.entity.Owner;
+import com.example.tennisapp.global.common.BaseEntity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -33,10 +38,10 @@ public class Court extends BaseEntity {
 	@Column(nullable = false)
 	private String address;
 
-	@Column(nullable = false, precision = 9, scale = 6)
+	@Column(nullable = false)
 	private Double latitude;
 
-	@Column(nullable = false, precision = 9, scale = 6)
+	@Column(nullable = false)
 	private Double longitude;
 
 	@Enumerated(EnumType.STRING)

@@ -2,6 +2,7 @@ package com.example.tennisapp.domain.member.entity;
 
 import java.time.LocalDate;
 
+import com.example.tennisapp.domain.member.enums.ExperienceLevel;
 import com.example.tennisapp.global.common.BaseEntity;
 
 import jakarta.persistence.Column;
@@ -36,10 +37,9 @@ public class Member extends BaseEntity {
 
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
-	private ExperienceLevel experienceLevel;
+	private ExperienceLevel experienceLevel; // 테니스 실력
 
-	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
-	private MemberStatus status;
+	private boolean isDeleted = false;   // 탈퇴 여부 (soft delete)
 }
 

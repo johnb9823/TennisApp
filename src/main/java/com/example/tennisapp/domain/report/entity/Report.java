@@ -1,6 +1,10 @@
 package com.example.tennisapp.domain.report.entity;
 
+import com.example.tennisapp.domain.board.entity.Board;
+import com.example.tennisapp.domain.comment.entity.Comment;
+import com.example.tennisapp.domain.member.entity.Member;
 import com.example.tennisapp.domain.report.enums.ReportReason;
+import com.example.tennisapp.global.common.BaseEntity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -21,7 +25,7 @@ public class Report extends BaseEntity {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "reporter_id", nullable = false)
-	private User reporter;
+	private Member reporter;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "board_id")

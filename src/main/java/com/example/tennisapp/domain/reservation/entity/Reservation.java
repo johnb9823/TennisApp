@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 import com.example.tennisapp.domain.court.entity.Court;
+import com.example.tennisapp.domain.member.entity.Member;
 import com.example.tennisapp.domain.reservation.enums.ReservationStatus;
 import com.example.tennisapp.global.common.BaseEntity;
 

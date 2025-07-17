@@ -33,6 +33,8 @@ public enum ExceptionCode implements ErrorCode {
 	PASSWORD_MISMATCH(HttpStatus.BAD_REQUEST, "입력한 비밀번호가 일치하지 않습니다."),
 	SAME_NAME(HttpStatus.BAD_REQUEST, "이전과 동일한 이름은 변경할 수 없습니다."),
 	SAME_CONTENT(HttpStatus.BAD_REQUEST, "이전과 동일한 소개입니다."),
+	INVALID_EXPERIENCE_LEVEL(HttpStatus.BAD_REQUEST, "잘못된 경험 수준입니다."),
+	INVALID_REGION(HttpStatus.BAD_REQUEST, "잘못된 지역 정보입니다."),
 
 	// 신고
 	ALREADY_REPORTED(HttpStatus.BAD_REQUEST, "이미 신고한 사용자입니다."),

@@ -13,17 +13,21 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Past;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long memberId;
 
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private String name;
 
 	@Column(nullable = false, unique = true)
@@ -32,6 +36,7 @@ public class Member extends BaseEntity {
 	@Column(nullable = false)
 	private String password;
 
+	@Past(message = "생년월일은 과거 날짜여야 합니다.")
 	@Column(nullable = false)
 	private LocalDate birthdate;
 
@@ -48,5 +53,36 @@ public class Member extends BaseEntity {
 
 	@Column(nullable = false)
 	private boolean isDeleted = false;   // 탈퇴 여부 (soft delete)
+
+
+
+	public Member(String name, String email, String password, LocalDate birthdate,
+		String content, ExperienceLevel experienceLevel, Region region) {
+		this.name = name;
+		this.email = email;
+		this.password = password;
+		this.birthdate = birthdate;
+		this.content = content;
+		this.experienceLevel = experienceLevel;
+		this.region = region;
+	}
+
+
+	public void softDelete() {
+		this.isDeleted = true;
+	}
+
+	public void updateProfile(String name, String content, ExperienceLevel experienceLevel, Region region) {
+		this.name = name;
+		this.content = content;
+		this.experienceLevel = experienceLevel;
+		this.region = region;
+
+	}
+
+	public void updatePassword(String newPassword) {
+		this.password = newPassword;
+	}
+
 }
 

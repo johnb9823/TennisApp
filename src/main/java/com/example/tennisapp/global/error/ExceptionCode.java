@@ -19,6 +19,7 @@ public enum ExceptionCode implements ErrorCode {
 	INVALID_EXPERIENCE_LEVEL(HttpStatus.BAD_REQUEST, "잘못된 경험 수준입니다."),
 	INVALID_REGION(HttpStatus.BAD_REQUEST, "잘못된 지역 정보입니다."),
 	MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 사용자입니다."),
+	OWNER_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 사장님입니다."),
 	LOGIN_REQUIRED(HttpStatus.UNAUTHORIZED, "로그인이 필요합니다."),
 	SAME_PASSWORD(HttpStatus.BAD_REQUEST, "이전과 동일한 비밀번호는 사용이 불가합니다."),
 	PASSWORD_MISMATCH(HttpStatus.BAD_REQUEST, "입력한 비밀번호가 일치하지 않습니다."),

@@ -55,7 +55,6 @@ public class Member extends BaseEntity {
 	private boolean isDeleted = false;   // 탈퇴 여부 (soft delete)
 
 
-
 	public Member(String name, String email, String password, LocalDate birthdate,
 		String content, ExperienceLevel experienceLevel, Region region) {
 		this.name = name;

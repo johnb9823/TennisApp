@@ -18,6 +18,7 @@ import com.example.tennisapp.domain.member.dto.request.SignupRequest;
 import com.example.tennisapp.domain.member.dto.request.UpdateRequest;
 import com.example.tennisapp.domain.member.dto.response.LoginResponse;
 import com.example.tennisapp.domain.member.dto.response.MemberProfileResponse;
+import com.example.tennisapp.domain.member.dto.response.SignupResponse;
 import com.example.tennisapp.domain.member.entity.Member;
 import com.example.tennisapp.domain.member.service.MemberService;
 import com.example.tennisapp.global.error.UnauthorizedException;
@@ -37,7 +38,7 @@ public class MemberController {
 
 	//회원가입
 	@PostMapping("/signup")
-	public ResponseEntity<ApiResponse<Void>> signup(@Valid @RequestBody SignupRequest request) {
+	public ResponseEntity<ApiResponse<SignupResponse>> signup(@Valid @RequestBody SignupRequest request) {
 		memberService.signup(request);
 		return ResponseEntity.ok(ApiResponse.of(SuccessCode.SIGNUP_SUCCESS));
 	}

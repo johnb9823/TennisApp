@@ -12,6 +12,7 @@ import com.example.tennisapp.domain.member.dto.response.LoginResponse;
 import com.example.tennisapp.domain.member.dto.response.MemberProfileResponse;
 import com.example.tennisapp.domain.member.entity.Member;
 import com.example.tennisapp.domain.member.repository.MemberRepository;
+import com.example.tennisapp.domain.owner.repository.OwnerRepository;
 import com.example.tennisapp.global.error.CustomRuntimeException;
 import com.example.tennisapp.global.error.ExceptionCode;
 
@@ -25,6 +26,7 @@ public class MemberService {
 
 	private final MemberRepository memberRepository;
 	private final PasswordEncoder passwordEncoder;
+	private final OwnerRepository ownerRepository;
 
 	public void signup(SignupRequest request) {
 		if (memberRepository.existsByEmail(request.getEmail())) {
@@ -32,6 +34,14 @@ public class MemberService {
 		}
 
 		if (memberRepository.existsByName(request.getName())) {
+			throw new CustomRuntimeException(ExceptionCode.NAME_ALREADY_EXIST);
+		}
+
+		if (ownerRepository.existsByEmail(request.getEmail())) {
+			throw new CustomRuntimeException(ExceptionCode.EMAIL_ALREADY_EXIST);
+		}
+
+		if (ownerRepository.existsByName(request.getName())) {
 			throw new CustomRuntimeException(ExceptionCode.NAME_ALREADY_EXIST);
 		}
 

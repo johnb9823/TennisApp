@@ -1,4 +1,4 @@
-package com.example.tennisapp.domain.auth.dto.request;
+package com.example.tennisapp.domain.member.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class LoginRequestDto {
+public class LoginRequest {
 
 	@Email
 	@NotBlank(message = "이메일을 입력해주세요.")

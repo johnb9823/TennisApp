@@ -31,5 +31,13 @@ public class Owner extends BaseEntity {
 
 	@Column(nullable = false)
 	private boolean status;  // true: 탈퇴한 상태, false: 정상 상태
+
+	public Owner(String name, String email, String password, LocalDate birthdate) {
+		this.name = name;
+		this.email = email;
+		this.password = password;
+		this.birthdate = birthdate;
+		this.status = false; // 기본값: 정상 상태
+	}
 }
 

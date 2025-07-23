@@ -3,6 +3,7 @@ package com.example.tennisapp.domain.member.service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.tennisapp.domain.member.dto.request.DeleteRequest;
 import com.example.tennisapp.domain.member.dto.request.LoginRequest;
 import com.example.tennisapp.domain.member.dto.request.PasswordUpdateRequest;
 import com.example.tennisapp.domain.member.dto.request.SignupRequest;
@@ -98,9 +99,14 @@ public class MemberService {
 	}
 
 	@Transactional
-	public void softDeleteMember(Long memberId) {
+	public void softDeleteMember(Long memberId, DeleteRequest request) {
 		Member member = memberRepository.findByMemberIdAndIsDeletedFalse(memberId)
 			.orElseThrow(() -> new CustomRuntimeException(ExceptionCode.MEMBER_NOT_FOUND));
+
+		if (!passwordEncoder.matches(request.getPassword(), member.getPassword())) {
+			throw new CustomRuntimeException(ExceptionCode.PASSWORD_MISMATCH);
+		}
+
 		member.softDelete();
 	}
 

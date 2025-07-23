@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.tennisapp.domain.member.dto.request.DeleteRequest;
 import com.example.tennisapp.domain.member.dto.request.LoginRequest;
 import com.example.tennisapp.domain.member.dto.request.PasswordUpdateRequest;
 import com.example.tennisapp.domain.member.dto.request.SignupRequest;
@@ -100,14 +101,19 @@ public class MemberController {
 
 	// 회원 탈퇴
 	@DeleteMapping("/me")
-	public ResponseEntity<ApiResponse<Void>> deleteMyAccount(HttpSession session) {
+	public ResponseEntity<ApiResponse<Void>> deleteMyAccount(
+		@RequestBody @Valid DeleteRequest request,
+		HttpSession session
+	) {
 		Member loginMember = getSessionMember(session);
-		memberService.softDeleteMember(loginMember.getMemberId());
+		memberService.softDeleteMember(loginMember.getMemberId(), request);
 		session.invalidate(); // 세션 만료
+
 		return ResponseEntity.ok(
 			ApiResponse.of(SuccessCode.DELETE_MEMBER_SUCCESS, null)
 		);
 	}
+
 
 	private Member getSessionMember(HttpSession session) {
 		Member loginMember = (Member) session.getAttribute("LOGIN_MEMBER");

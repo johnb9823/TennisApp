@@ -17,6 +17,8 @@ public enum SuccessCode {
 	// 회원
 	FIND_MEMBER_SUCCESS(HttpStatus.OK, "회원 조회 성공"),
 	UPDATE_MEMBER_SUCCESS(HttpStatus.OK, "회원정보 수정 성공"),
+	UPDATE_PASSWORD_SUCCESS(HttpStatus.OK, "비밀번호 수정 성공"),
+
 	DELETE_MEMBER_SUCCESS(HttpStatus.OK, "회원 탈퇴 완료"),
 
 	// 리뷰

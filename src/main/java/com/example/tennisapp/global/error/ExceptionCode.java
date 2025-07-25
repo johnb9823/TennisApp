@@ -33,8 +33,13 @@ public enum ExceptionCode implements ErrorCode {
 
 	//게시판
 	BOARD_NOT_FOUND(HttpStatus.NOT_FOUND, "게시글이 존재하지 않습니다."),
-	DELETE_BOARD_WRITER_ONLY(HttpStatus.NOT_FOUND, "게시글 작성자만 수정할 수 있습니다."),
+	UPDATE_BOARD_WRITER_ONLY(HttpStatus.NOT_FOUND, "게시글 작성자만 수정 수 있습니다."),
+	DELETE_BOARD_WRITER_ONLY(HttpStatus.NOT_FOUND, "게시글 작성자만 삭제할 수 있습니다."),
 
+	// 댓글
+	COMMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "댓글이 존재하지 않습니다."),
+	UPDATE_COMMENT_WRITER_ONLY(HttpStatus.NOT_FOUND, "게시글 작성자만 수정 수 있습니다."),
+	DELETE_COMMENT_WRITER_ONLY(HttpStatus.NOT_FOUND, "게시글 작성자만 삭제할 수 있습니다."),
 
 	// 신고
 	ALREADY_REPORTED(HttpStatus.BAD_REQUEST, "이미 신고한 사용자입니다."),

@@ -50,7 +50,7 @@ public class BoardService {
 			.orElseThrow(() -> new CustomRuntimeException(ExceptionCode.BOARD_NOT_FOUND));
 
 		if (!board.getMember().getMemberId().equals(member.getMemberId())) {
-			throw new CustomRuntimeException(ExceptionCode.DELETE_BOARD_WRITER_ONLY);
+			throw new CustomRuntimeException(ExceptionCode.UPDATE_BOARD_WRITER_ONLY);
 		}
 
 		PostCategory category = PostCategory.valueOf(request.getCategory());

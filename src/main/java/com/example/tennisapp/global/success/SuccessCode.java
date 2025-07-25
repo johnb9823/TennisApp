@@ -35,6 +35,14 @@ public enum SuccessCode {
 	GET_ALL_BOARDS_SUCCESS(HttpStatus.OK, "게시물 전체 조회 성공"),
 	DELETE_BOARD_SUCCESS(HttpStatus.OK, "게시물 삭제 성공"),
 
+	//댓글
+	CREATE_COMMENT_SUCCESS(HttpStatus.OK, "댓글 작성 성공"),
+	UPDATE_COMMENT_SUCCESS(HttpStatus.OK, "댓글 수정 성공"),
+	DELETE_COMMENT_SUCCESS(HttpStatus.OK, "삭제 삭제 성공"),
+	GET_COMMENT_SUCCESS(HttpStatus.OK, "댓글 조회 성공"),
+
+
+
 	// 신고
 	CREATE_REPORT_SUCCESS(HttpStatus.CREATED, "신고가 성공적으로 접수되었습니다."),
 

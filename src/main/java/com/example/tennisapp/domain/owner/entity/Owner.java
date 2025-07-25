@@ -9,15 +9,21 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Past;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Owner extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long ownerId;
 
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private String name;
 
 	@Column(nullable = false, unique = true)
@@ -26,18 +32,36 @@ public class Owner extends BaseEntity {
 	@Column(nullable = false)
 	private String password;
 
+	@Past(message = "생년월일은 과거 날짜여야 합니다.")
 	@Column(nullable = false)
 	private LocalDate birthdate;
 
 	@Column(nullable = false)
-	private boolean status;  // true: 탈퇴한 상태, false: 정상 상태
+	private String content;
 
-	public Owner(String name, String email, String password, LocalDate birthdate) {
+	@Column(nullable = false)
+	private boolean isDeleted = false;
+
+
+	public Owner(String name, String email, String password, LocalDate birthdate, String content) {
 		this.name = name;
 		this.email = email;
 		this.password = password;
 		this.birthdate = birthdate;
-		this.status = false; // 기본값: 정상 상태
+		this.content = content;
+	}
+
+	public void softDelete() {
+		this.isDeleted = true;
+	}
+
+	public void updatePassword(String newPassword) {
+		this.password = newPassword;
+	}
+
+	public void updateProfile(String name, String content) {
+		this.name = name;
+		this.content = content;
 	}
 }
 

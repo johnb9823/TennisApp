@@ -12,7 +12,7 @@ public enum SuccessCode {
 	SIGNUP_SUCCESS(HttpStatus.OK, "회원가입 완료"),
 	LOGIN_SUCCESS(HttpStatus.OK, "로그인 성공"),
 	LOGOUT_SUCCESS(HttpStatus.OK, "로그아웃 성공"),
-	REFRESH_TOKEN(HttpStatus.OK, "엑세스 토큰 재발급 성공"),
+
 
 	// 회원
 	FIND_MEMBER_SUCCESS(HttpStatus.OK, "회원 조회 성공"),
@@ -27,6 +27,13 @@ public enum SuccessCode {
 	GET_REVIEW_SUCCESS(HttpStatus.OK, "리뷰 상세 조회 성공"),
 	GET_ALL_REVIEWS_SUCCESS(HttpStatus.OK, "리뷰 전체 조회 성공"),
 	DELETE_REVIEW_SUCCESS(HttpStatus.OK, "리뷰 삭제 성공"),
+
+	// 게시판
+	CREATE_BOARD_SUCCESS(HttpStatus.OK, "게시물 작성 성공"),
+	UPDATE_BOARD_SUCCESS(HttpStatus.OK, "게시물 수정 성공"),
+	GET_BOARD_SUCCESS(HttpStatus.OK, "게시물 조회 성공"),
+	GET_ALL_BOARDS_SUCCESS(HttpStatus.OK, "게시물 전체 조회 성공"),
+	DELETE_BOARD_SUCCESS(HttpStatus.OK, "게시물 삭제 성공"),
 
 	// 신고
 	CREATE_REPORT_SUCCESS(HttpStatus.CREATED, "신고가 성공적으로 접수되었습니다."),

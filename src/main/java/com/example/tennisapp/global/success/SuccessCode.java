@@ -28,6 +28,13 @@ public enum SuccessCode {
 	GET_ALL_REVIEWS_SUCCESS(HttpStatus.OK, "리뷰 전체 조회 성공"),
 	DELETE_REVIEW_SUCCESS(HttpStatus.OK, "리뷰 삭제 성공"),
 
+	// 게시판
+	CREATE_BOARD_SUCCESS(HttpStatus.OK, "게시물 작성 성공"),
+	UPDATE_BOARD_SUCCESS(HttpStatus.OK, "게시물 수정 성공"),
+	GET_BOARD_SUCCESS(HttpStatus.OK, "게시물 조회 성공"),
+	GET_ALL_BOARDS_SUCCESS(HttpStatus.OK, "게시물 전체 조회 성공"),
+	DELETE_BOARD_SUCCESS(HttpStatus.OK, "게시물 삭제 성공"),
+
 	// 신고
 	CREATE_REPORT_SUCCESS(HttpStatus.CREATED, "신고가 성공적으로 접수되었습니다."),
 

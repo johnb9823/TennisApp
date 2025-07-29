@@ -1,9 +1,14 @@
 package com.example.tennisapp.domain.board.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.example.tennisapp.domain.board.enums.PostCategory;
+import com.example.tennisapp.domain.comment.entity.Comment;
 import com.example.tennisapp.domain.member.entity.Member;
 import com.example.tennisapp.global.common.BaseEntity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -14,6 +19,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.Getter;
 
 @Entity
@@ -43,6 +49,10 @@ public class Board extends BaseEntity {
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	private PostCategory category;
+
+	@OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Comment> comments = new ArrayList<>();
+
 
 	public Board() {}
 

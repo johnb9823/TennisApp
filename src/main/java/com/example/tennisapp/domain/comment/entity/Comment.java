@@ -17,8 +17,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import lombok.Getter;
 
 @Entity
+@Getter
 public class Comment extends BaseEntity {
 
 	@Id
@@ -44,5 +46,24 @@ public class Comment extends BaseEntity {
 	private List<Comment> childComments = new ArrayList<>();
 	//대댓글 리스트 (cascade = ALL → 댓글 삭제 시 대댓글도 삭제)
 	//댓글 삭제 시 대댓글도 같이 삭제 (orphanRemoval = true)
+
+	// 생성자
+	public Comment(Board board, Member member, String content, Comment parentComment) {
+		this.board = board;
+		this.member = member;
+		this.content = content;
+		this.parentComment = parentComment;
+	}
+
+	public Comment(Board board, Member member, String content) {
+		this(board, member, content, null);
+	}
+
+	public Comment() {}
+
+	public void updateContent(String content) {
+		this.content = content;
+	}
+
 }
 

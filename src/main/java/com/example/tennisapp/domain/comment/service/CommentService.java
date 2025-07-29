@@ -30,16 +30,26 @@ public class CommentService {
 	private final PasswordEncoder passwordEncoder;
 
 	@Transactional
-	public CommentResponse createComment(Long boardId ,CommentCreate request, Member loginMember) {
+	public CommentResponse createComment(Long boardId, CommentCreate request, Member loginMember) {
 		Board board = boardRepository.findById(boardId)
 			.orElseThrow(() -> new CustomRuntimeException(ExceptionCode.BOARD_NOT_FOUND));
 
-		Comment comment = new Comment(board, loginMember, request.getContent());
+		Comment parentComment = null;
+		if (request.getParentCommentId() != null) {
+			parentComment = commentRepository.findById(request.getParentCommentId())
+				.orElseThrow(() -> new CustomRuntimeException(ExceptionCode.COMMENT_NOT_FOUND));
+		}
+
+		Comment comment = new Comment(board, loginMember, request.getContent(), parentComment);
 		Comment savedComment = commentRepository.save(comment);
 
-		return new CommentResponse(savedComment.getCommentId(), savedComment.getContent(), savedComment.getMember().getName());
-
+		return new CommentResponse(
+			savedComment.getCommentId(),
+			savedComment.getContent(),
+			savedComment.getMember().getName()
+		);
 	}
+
 
 	@Transactional
 	public CommentResponse updateComment(Long commentId, CommentUpdate request, Member loginMember) {

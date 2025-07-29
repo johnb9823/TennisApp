@@ -22,19 +22,18 @@ import com.example.tennisapp.global.error.UnauthorizedException;
 import com.example.tennisapp.global.success.ApiResponse;
 import com.example.tennisapp.global.success.SuccessCode;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/comments")
+@RequestMapping("/boards/{boardId}/comments")
 public class CommentController {
 
 	private final CommentService commentService;
 
-	@PostMapping("/{boardId}")
+	@PostMapping
 	public ResponseEntity<ApiResponse<CommentResponse>> createComment(
 		@PathVariable Long boardId,
 		@Valid @RequestBody CommentCreate request,
@@ -68,7 +67,7 @@ public class CommentController {
 	}
 
 	// 특정 게시글의 전체 댓글 조회
-	@GetMapping("/board/{boardId}")
+	@GetMapping
 	public ResponseEntity<ApiResponse<List<CommentResponse>>> getCommentsByBoard(
 		@PathVariable Long boardId
 	) {

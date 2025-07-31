@@ -28,15 +28,25 @@ public class Report extends BaseEntity {
 	private Member reporter;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "board_id")
+	@JoinColumn(name = "board_id", nullable = true)
 	private Board board;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "comment_id")
+	@JoinColumn(name = "comment_id", nullable = true)
 	private Comment comment;
 
 	@Enumerated(EnumType.STRING)
 	private ReportReason reason;
 
 	private String description;
+
+	public Report(Member reporter, Board board, Comment comment, ReportReason reason, String description) {
+		this.reporter = reporter;
+		this.board = board;
+		this.comment = comment;
+		this.reason = reason;
+		this.description = description;
+	}
+
+	public Report() {}
 }

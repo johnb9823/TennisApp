@@ -52,7 +52,7 @@ public class CommentController {
 	)  {
 		Member loginMember = getSessionMember(session);
 		CommentResponse commentResponse = commentService.updateComment(commentId, request, loginMember);
-		return ResponseEntity.ok(ApiResponse.of(SuccessCode.CREATE_COMMENT_SUCCESS, commentResponse));
+		return ResponseEntity.ok(ApiResponse.of(SuccessCode.UPDATE_COMMENT_SUCCESS, commentResponse));
 	}
 
 	@DeleteMapping("/{commentId}")

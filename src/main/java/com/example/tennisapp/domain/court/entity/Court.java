@@ -20,8 +20,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import lombok.Getter;
 
 @Entity
+@Getter
 public class Court extends BaseEntity {
 
 	@Id
@@ -53,5 +55,15 @@ public class Court extends BaseEntity {
 
 	@OneToMany(mappedBy = "court", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<CourtImage> images = new ArrayList<>();
+
+	public Court(String name, String address, Double latitude, Double longitude, CourtType courtType, String description) {
+		this.name = name;
+		this.address = address;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.courtType = courtType;
+		this.description = description;
+	}
+
 }
 

@@ -65,5 +65,14 @@ public class Court extends BaseEntity {
 		this.description = description;
 	}
 
+	public void updateCourt(String name, String address, Double latitude, Double longitude, CourtType courtType, String description) {
+		this.name = name;
+		this.address = address;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.courtType = courtType;
+		this.description = description;
+	}
+
 }
 

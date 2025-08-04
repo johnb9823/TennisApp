@@ -8,6 +8,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class CourtCreate {
 
+    private final Long ownerId;
     private final String name;
     private final String address;
     private final Double latitude;

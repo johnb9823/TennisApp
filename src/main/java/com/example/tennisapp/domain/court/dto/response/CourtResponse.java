@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
-@AllArgsConstructor
 public class CourtResponse {
 
     private final Long courtId;
@@ -57,8 +56,5 @@ public class CourtResponse {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
-
-
-
 
 }

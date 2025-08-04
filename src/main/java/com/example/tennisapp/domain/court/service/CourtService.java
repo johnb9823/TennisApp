@@ -5,6 +5,8 @@ import com.example.tennisapp.domain.court.dto.request.CourtUpdate;
 import com.example.tennisapp.domain.court.dto.response.CourtResponse;
 import com.example.tennisapp.domain.court.entity.Court;
 import com.example.tennisapp.domain.court.repository.CourtRepository;
+import com.example.tennisapp.domain.owner.entity.Owner;
+import com.example.tennisapp.domain.owner.repository.OwnerRepository;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,10 +19,14 @@ import java.util.stream.Collectors;
 public class CourtService {
 
     private final CourtRepository courtRepository;
+    private final OwnerRepository ownerRepository;
 
     @Transactional
     public CourtResponse createCourt(CourtCreate request) {
+        Owner owner = ownerRepository.findById(request.getOwnerId())
+                .orElseThrow(() -> new IllegalArgumentException("해당 오너가 존재하지 않습니다."));
         Court court = new Court(
+                owner,
                 request.getName(),
                 request.getAddress(),
                 request.getLatitude(),

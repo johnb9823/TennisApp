@@ -5,6 +5,10 @@ import com.example.tennisapp.domain.court.dto.request.CourtUpdate;
 import com.example.tennisapp.domain.court.dto.response.CourtResponse;
 import com.example.tennisapp.domain.court.entity.Court;
 import com.example.tennisapp.domain.court.repository.CourtRepository;
+import com.example.tennisapp.domain.owner.entity.Owner;
+import com.example.tennisapp.domain.owner.repository.OwnerRepository;
+import com.example.tennisapp.global.error.CustomRuntimeException;
+import com.example.tennisapp.global.error.ExceptionCode;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,10 +21,20 @@ import java.util.stream.Collectors;
 public class CourtService {
 
     private final CourtRepository courtRepository;
+    private final OwnerRepository ownerRepository;
 
     @Transactional
     public CourtResponse createCourt(CourtCreate request) {
+
+        Owner owner = ownerRepository.findById(request.getOwnerId())
+                .orElseThrow(() -> new CustomRuntimeException(ExceptionCode.OWNER_NOT_FOUND));
+
+        if (courtRepository.existsByNameAndAddress(request.getName(), request.getAddress())) {
+            throw new CustomRuntimeException(ExceptionCode.COURT_ALREADY_EXISTS);
+        }
+
         Court court = new Court(
+                owner,
                 request.getName(),
                 request.getAddress(),
                 request.getLatitude(),
@@ -67,7 +81,7 @@ public class CourtService {
     @Transactional(readOnly = true)
     public CourtResponse getCourtById(Long courtId) {
         Court court = courtRepository.findById(courtId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 코트가 존재하지 않습니다."));
+                .orElseThrow(() -> new CustomRuntimeException(ExceptionCode.COURT_NOT_FOUND));
 
         return new CourtResponse(
                 court.getCourtId(),
@@ -88,7 +102,11 @@ public class CourtService {
     @Transactional
     public CourtResponse updateCourt(Long courtId, CourtUpdate request) {
         Court court = courtRepository.findById(courtId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 코트가 존재하지 않습니다."));
+                .orElseThrow(() -> new CustomRuntimeException(ExceptionCode.COURT_NOT_FOUND));
+
+        if (!court.getOwner().getOwnerId().equals(request.getOwnerId())) {
+            throw new CustomRuntimeException(ExceptionCode.UPDATE_COURT_OWNER_ONLY);
+        }
 
         court.updateCourt(
                 request.getName(),
@@ -116,9 +134,13 @@ public class CourtService {
     }
 
     @Transactional
-    public void deleteCourt(Long courtId) {
+    public void deleteCourt(Long courtId, Long ownerId) {
         Court court = courtRepository.findById(courtId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 코트가 존재하지 않습니다."));
+                .orElseThrow(() -> new CustomRuntimeException(ExceptionCode.COURT_NOT_FOUND));
+
+        if (!court.getOwner().getOwnerId().equals(ownerId)) {
+            throw new CustomRuntimeException(ExceptionCode.DELETE_COURT_OWNER_ONLY);
+        }
         courtRepository.delete(court);
     }
 }

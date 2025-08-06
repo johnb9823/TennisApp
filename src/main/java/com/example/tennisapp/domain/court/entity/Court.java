@@ -56,7 +56,8 @@ public class Court extends BaseEntity {
 	@OneToMany(mappedBy = "court", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<CourtImage> images = new ArrayList<>();
 
-	public Court(String name, String address, Double latitude, Double longitude, CourtType courtType, String description) {
+	public Court(Owner owner, String name, String address, Double latitude, Double longitude, CourtType courtType, String description) {
+		this.owner = owner;
 		this.name = name;
 		this.address = address;
 		this.latitude = latitude;
@@ -72,6 +73,9 @@ public class Court extends BaseEntity {
 		this.longitude = longitude;
 		this.courtType = courtType;
 		this.description = description;
+	}
+
+	public Court() {
 	}
 
 }

@@ -6,6 +6,7 @@ import com.example.tennisapp.domain.court.dto.response.CourtResponse;
 import com.example.tennisapp.domain.court.service.CourtService;
 import com.example.tennisapp.global.success.ApiResponse;
 import com.example.tennisapp.global.success.SuccessCode;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -47,8 +48,12 @@ public class CourtController {
     }
 
     @DeleteMapping("/{courtId}")
-    public ResponseEntity<ApiResponse<Void>> deleteCourt(@PathVariable Long courtId) {
-        courtService.deleteCourt(courtId);
+    public ResponseEntity<ApiResponse<Void>> deleteCourt(
+            @PathVariable Long courtId,
+            HttpSession session
+    ) {
+        Long ownerId = (Long) session.getAttribute("OWNER_ID");
+        courtService.deleteCourt(courtId, ownerId);
         return ResponseEntity.ok(ApiResponse.of(SuccessCode.COURT_DELETED_SUCCESS, null));
     }
 }

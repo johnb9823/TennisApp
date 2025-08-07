@@ -18,7 +18,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.Getter;
 
+@Getter
 @Entity
 public class Reservation extends BaseEntity {
 
@@ -46,5 +48,6 @@ public class Reservation extends BaseEntity {
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
 	private ReservationStatus status;
+
 }
 

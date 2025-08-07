@@ -29,6 +29,13 @@ public enum ExceptionCode implements ErrorCode {
 	CANT_FIND_INTERFACE(HttpStatus.NOT_FOUND, "해당 정보를 찾을 수 없습니다"),
 	KAKAO_API_EMPTY_RESULT(HttpStatus.NOT_FOUND, "Kakao API 응답에 좌표 정보가 없습니다."),
 
+	// 예약
+	RESERVATION_NOT_FOUND(HttpStatus.NOT_FOUND, "예약 정보를 찾을 수 없습니다."),
+	RESERVATION_ALREADY_EXISTS(HttpStatus.CONFLICT, "이미 예약된 시간입니다."),
+	RESERVATION_NOT_ALLOWED(HttpStatus.FORBIDDEN, "예약이 불가능한 시간입니다."),
+	RESERVATION_UPDATE_WRITER_ONLY(HttpStatus.FORBIDDEN, "예약 작성자만 수정할 수 있습니다."),
+	RESERVATION_CANCEL_WRITER_ONLY(HttpStatus.FORBIDDEN, "예약 작성자만 취소할 수 있습니다."),
+
 	//게시판
 	BOARD_NOT_FOUND(HttpStatus.NOT_FOUND, "게시글이 존재하지 않습니다."),
 	UPDATE_BOARD_WRITER_ONLY(HttpStatus.NOT_FOUND, "게시글 작성자만 수정 수 있습니다."),

@@ -35,6 +35,7 @@ public enum ExceptionCode implements ErrorCode {
 	RESERVATION_NOT_ALLOWED(HttpStatus.FORBIDDEN, "예약이 불가능한 시간입니다."),
 	RESERVATION_UPDATE_WRITER_ONLY(HttpStatus.FORBIDDEN, "예약 작성자만 수정할 수 있습니다."),
 	RESERVATION_CANCEL_WRITER_ONLY(HttpStatus.FORBIDDEN, "예약 작성자만 취소할 수 있습니다."),
+	RESERVATION_FIND_WRITER_ONLY(HttpStatus.FORBIDDEN, "예약 작성자만 취소할 수 있습니다."),
 
 	//게시판
 	BOARD_NOT_FOUND(HttpStatus.NOT_FOUND, "게시글이 존재하지 않습니다."),

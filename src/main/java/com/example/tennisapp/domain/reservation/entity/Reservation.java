@@ -49,5 +49,25 @@ public class Reservation extends BaseEntity {
 	@Column(nullable = false)
 	private ReservationStatus status;
 
+	public Reservation(Member member, Court court, LocalDate reservationDate, LocalTime startTime, LocalTime endTime) {
+		this.member = member;
+		this.court = court;
+		this.reservationDate = reservationDate;
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.status = ReservationStatus.RESERVED;
+	}
+
+
+	// 예약 정보 수정 메서드 예시
+	public void updateReservation(LocalDate reservationDate, LocalTime startTime, LocalTime endTime) {
+		this.reservationDate = reservationDate;
+		this.startTime = startTime;
+		this.endTime = endTime;
+	}
+	protected Reservation() {
+		// JPA용 기본 생성자
+	}
+
 }
 

@@ -37,8 +37,7 @@ public enum SuccessCode {
 
 	//예약
 	RESERVATION_SUCCESS(HttpStatus.CREATED, "예약이 완료되었습니다."),
-	RESERVATION_LIST_RETRIEVED(HttpStatus.OK, "예약 목록 조회가 완료되었습니다."),
-	RESERVATION_DETAIL_RETRIEVED(HttpStatus.OK, "예약 상세 조회가 완료되었습니다."),
+	RESERVATION_RETRIEVED(HttpStatus.OK, "예약 조회가 완료되었습니다."),
 	RESERVATION_UPDATED(HttpStatus.OK, "예약 정보 수정이 완료되었습니다."),
 	RESERVATION_CANCEL(HttpStatus.OK, "예약이 취소되었습니다."),
 

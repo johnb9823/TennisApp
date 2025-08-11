@@ -12,7 +12,7 @@ import java.time.LocalTime;
 @AllArgsConstructor
 public class ReservationCreate {
 
-    private final Long memberId;
+    @NotNull(message = "코트 ID는 필수입니다.")
     private final Long courtId;
     @NotNull
     @Future(message = "예약 날짜는 현재 날짜 이후여야 합니다.")

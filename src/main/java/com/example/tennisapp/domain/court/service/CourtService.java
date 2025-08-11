@@ -103,7 +103,6 @@ public class CourtService {
     public CourtResponse updateCourt(Long courtId, CourtUpdate request) {
         Court court = courtRepository.findById(courtId)
                 .orElseThrow(() -> new CustomRuntimeException(ExceptionCode.COURT_NOT_FOUND));
-
         if (!court.getOwner().getOwnerId().equals(request.getOwnerId())) {
             throw new CustomRuntimeException(ExceptionCode.UPDATE_COURT_OWNER_ONLY);
         }

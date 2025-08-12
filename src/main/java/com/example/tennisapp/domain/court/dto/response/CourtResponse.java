@@ -15,8 +15,6 @@ public class CourtResponse {
     private final Long courtId;
     private final String name;
     private final String address;
-    private final Double latitude;
-    private final Double longitude;
     private final CourtType courtType;
     private final String description;
     private final List<String> imageUrls;
@@ -32,8 +30,6 @@ public class CourtResponse {
                 court.getCourtId(),
                 court.getName(),
                 court.getAddress(),
-                court.getLatitude(),
-                court.getLongitude(),
                 court.getCourtType(),
                 court.getDescription(),
                 imageUrls,
@@ -42,14 +38,12 @@ public class CourtResponse {
         );
     }
 
-    public CourtResponse(Long courtId, String name, String address, Double latitude, Double longitude,
+    public CourtResponse(Long courtId, String name, String address,
                          CourtType courtType, String description, List<String> imageUrls,
                          LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.courtId = courtId;
         this.name = name;
         this.address = address;
-        this.latitude = latitude;
-        this.longitude = longitude;
         this.courtType = courtType;
         this.description = description;
         this.imageUrls = imageUrls;

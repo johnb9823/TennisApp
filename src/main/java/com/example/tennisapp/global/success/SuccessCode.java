@@ -48,9 +48,7 @@ public enum SuccessCode {
 	GET_COURT_LIST_SUCCESS(HttpStatus.OK, "코트 목록 조회가 완료되었습니다."),
 	GET_COURT_SUCCESS(HttpStatus.OK, "코트 조회가 완료되었습니다."),
 
-	//정상작동
-	SUCCESS_OK(HttpStatus.OK, "요청이 정상적으로 처리되었습니다."),
-	DELETE_OK(HttpStatus.OK, "삭제가 정상적으로 처리되었습니다.");
+	IMAGE_DELETED_SUCCESS(HttpStatus.OK, "이미지 삭제가 완료되었습니다.");
 
 	private final HttpStatus httpStatus;
 	private final String message;

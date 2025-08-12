@@ -21,9 +21,11 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@NoArgsConstructor
 public class Court extends BaseEntity {
 
 	@Id
@@ -40,12 +42,6 @@ public class Court extends BaseEntity {
 	@Column(nullable = false)
 	private String address;
 
-	@Column(nullable = false)
-	private Double latitude;
-
-	@Column(nullable = false)
-	private Double longitude;
-
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
 	private CourtType courtType;
@@ -56,26 +52,25 @@ public class Court extends BaseEntity {
 	@OneToMany(mappedBy = "court", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<CourtImage> images = new ArrayList<>();
 
-	public Court(Owner owner, String name, String address, Double latitude, Double longitude, CourtType courtType, String description) {
+	public Court(Owner owner, String name, String address, CourtType courtType, String description) {
 		this.owner = owner;
 		this.name = name;
 		this.address = address;
-		this.latitude = latitude;
-		this.longitude = longitude;
 		this.courtType = courtType;
 		this.description = description;
 	}
 
-	public void updateCourt(String name, String address, Double latitude, Double longitude, CourtType courtType, String description) {
+	public void updateCourt(String name, String address, CourtType courtType, String description) {
 		this.name = name;
 		this.address = address;
-		this.latitude = latitude;
-		this.longitude = longitude;
 		this.courtType = courtType;
 		this.description = description;
 	}
 
-	public Court() {
+	/** Court <-> CourtImage 양방향 연관관계 편의 메서드 */
+	public void addImage(CourtImage image) {
+		this.images.add(image);
+		image.setCourtInternal(this); // setter 대신 내부 메서드로만 court 세팅
 	}
 
 }

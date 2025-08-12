@@ -12,9 +12,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@NoArgsConstructor(access = lombok.AccessLevel.PROTECTED)
 public class CourtImage extends BaseEntity {
 
 	@Id
@@ -29,6 +31,26 @@ public class CourtImage extends BaseEntity {
 	private String imageUrl;
 
 	@Column(nullable = false)
-	private boolean isThumbnail;
+	private boolean thumbnail;
+
+	public CourtImage(Court court, String imageUrl, boolean thumbnail) {
+		this.court = court;
+		this.imageUrl = imageUrl;
+		this.thumbnail = thumbnail;
+	}
+
+	public CourtImage(String imageUrl, boolean thumbnail) {
+		this.imageUrl = imageUrl;
+		this.thumbnail = thumbnail;
+	}
+
+	/** Court에서만 호출할 수 있도록 protected */
+	public void setCourtInternal(Court court) {
+		this.court = court;
+	}
+
+	public void setCourtFromCourtEntity(Court court) {
+		this.court = court;
+	}
 }
 

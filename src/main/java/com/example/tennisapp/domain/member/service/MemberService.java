@@ -1,5 +1,7 @@
 package com.example.tennisapp.domain.member.service;
 
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,8 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
+import java.util.concurrent.TimeUnit;
+
 @Service
 @RequiredArgsConstructor
 public class MemberService {
@@ -27,35 +31,57 @@ public class MemberService {
 	private final MemberRepository memberRepository;
 	private final PasswordEncoder passwordEncoder;
 	private final OwnerRepository ownerRepository;
+	private final RedissonClient redissonClient;
 
+	@Transactional
 	public void signup(SignupRequest request) {
-		if (memberRepository.existsByEmail(request.getEmail())) {
-			throw new CustomRuntimeException(ExceptionCode.EMAIL_ALREADY_EXIST);
+		String nameKey = "lock:name:" + request.getName();
+		RLock lock = redissonClient.getLock(nameKey);
+
+		try {
+			// 최대 5초 대기, 3초 동안 락 유지
+			if (lock.tryLock(5, 3, TimeUnit.SECONDS)) {
+
+				// 중복 체크 (Member)
+				if (memberRepository.existsByEmail(request.getEmail())) {
+					throw new CustomRuntimeException(ExceptionCode.EMAIL_ALREADY_EXIST);
+				}
+				if (memberRepository.existsByName(request.getName())) {
+					throw new CustomRuntimeException(ExceptionCode.NAME_ALREADY_EXIST);
+				}
+
+				// 중복 체크 (Owner)
+				if (ownerRepository.existsByEmail(request.getEmail())) {
+					throw new CustomRuntimeException(ExceptionCode.EMAIL_ALREADY_EXIST);
+				}
+				if (ownerRepository.existsByName(request.getName())) {
+					throw new CustomRuntimeException(ExceptionCode.NAME_ALREADY_EXIST);
+				}
+
+				// 저장
+				Member member = new Member(
+						request.getName(),
+						request.getEmail(),
+						passwordEncoder.encode(request.getPassword()),
+						request.getBirthdate(),
+						request.getContent(),
+						request.getExperienceLevel(),
+						request.getRegion()
+				);
+				memberRepository.save(member);
+
+			} else {
+				// 락을 획득하지 못한 경우에도 동일한 중복 이름 예외 처리
+				throw new CustomRuntimeException(ExceptionCode.NAME_ALREADY_EXIST);
+			}
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+			throw new RuntimeException("락 획득 중 오류 발생", e);
+		} finally {
+			if (lock.isHeldByCurrentThread()) {
+				lock.unlock();
+			}
 		}
-
-		if (memberRepository.existsByName(request.getName())) {
-			throw new CustomRuntimeException(ExceptionCode.NAME_ALREADY_EXIST);
-		}
-
-		if (ownerRepository.existsByEmail(request.getEmail())) {
-			throw new CustomRuntimeException(ExceptionCode.EMAIL_ALREADY_EXIST);
-		}
-
-		if (ownerRepository.existsByName(request.getName())) {
-			throw new CustomRuntimeException(ExceptionCode.NAME_ALREADY_EXIST);
-		}
-
-		Member member = new Member(
-			request.getName(),
-			request.getEmail(),
-			passwordEncoder.encode(request.getPassword()),
-			request.getBirthdate(),
-			request.getContent(),
-			request.getExperienceLevel(),
-			request.getRegion()
-		);
-
-		memberRepository.save(member);
 	}
 
 	public LoginResponse login(LoginRequest request, HttpSession session) {

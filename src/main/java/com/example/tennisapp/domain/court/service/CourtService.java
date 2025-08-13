@@ -77,39 +77,18 @@ public class CourtService {
 
     @Transactional(readOnly = true)
     public List<CourtResponse> getAllCourts() {
-        return courtRepository.findAll().stream()
-                .map(court -> new CourtResponse(
-                        court.getCourtId(),
-                        court.getName(),
-                        court.getAddress(),
-                        court.getCourtType(),
-                        court.getDescription(),
-                        court.getImages().stream()
-                                .map(image -> image.getImageUrl())
-                                .collect(Collectors.toList()),
-                        court.getCreatedAt(),
-                        court.getUpdatedAt()
-                )).collect(Collectors.toList());
+        return courtRepository.findAllWithImages().stream()
+                .map(CourtResponse::from)
+                .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
     public CourtResponse getCourtById(Long courtId) {
-        Court court = courtRepository.findById(courtId)
-                .orElseThrow(() -> new CustomRuntimeException(ExceptionCode.COURT_NOT_FOUND));
-
-        return new CourtResponse(
-                court.getCourtId(),
-                court.getName(),
-                court.getAddress(),
-                court.getCourtType(),
-                court.getDescription(),
-                court.getImages().stream()
-                        .map(image -> image.getImageUrl())
-                        .collect(Collectors.toList()),
-                court.getCreatedAt(),
-                court.getUpdatedAt()
-        );
+        Court court = courtRepository.findByIdWithImages(courtId);
+        if (court == null) throw new CustomRuntimeException(ExceptionCode.COURT_NOT_FOUND);
+        return CourtResponse.from(court);
     }
+
 
     @Transactional
     public CourtResponse updateCourt(Long courtId, CourtUpdate request, List<MultipartFile> newImages) {

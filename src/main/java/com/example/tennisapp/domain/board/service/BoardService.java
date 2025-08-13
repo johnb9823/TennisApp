@@ -1,5 +1,6 @@
 package com.example.tennisapp.domain.board.service;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
@@ -86,19 +87,25 @@ public class BoardService {
 		return new PostResponse(board);
 	}
 
+	// N+1 문제 제거: fetch join 사용
 	public PagedResponse<PostResponse> getBoards(int page, int size) {
-		PageRequest pageRequest = PageRequest.of(page, size, Sort.by("createdAt").descending());
-		Page<Board> boardPage = boardRepository.findAll(pageRequest);
+		int offset = page * size;
+
+		List<Board> boards = boardRepository.findAllWithMemberPaged(offset, size);
+		long totalElements = boardRepository.count();
+		int totalPages = (int) Math.ceil((double) totalElements / size);
+
+		List<PostResponse> postResponses = boards.stream()
+				.map(this::toPostResponse)
+				.collect(Collectors.toList());
 
 		return new PagedResponse<>(
-			boardPage.getContent().stream()
-				.map(this::toPostResponse)
-				.collect(Collectors.toList()),
-			boardPage.getNumber() + 1,
-			boardPage.getSize(),
-			boardPage.getTotalElements(),
-			boardPage.getTotalPages(),
-			boardPage.isLast()
+				postResponses,
+				page + 1,
+				size,
+				totalElements,
+				totalPages,
+				(page + 1) == totalPages
 		);
 	}
 

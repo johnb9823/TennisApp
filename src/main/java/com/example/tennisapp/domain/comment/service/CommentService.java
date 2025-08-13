@@ -83,11 +83,16 @@ public class CommentService {
 
 	@Transactional(readOnly = true)
 	public List<CommentResponse> getCommentsByBoard(Long boardId) {
-		Board board = boardRepository.findById(boardId)
-			.orElseThrow(() -> new CustomRuntimeException(ExceptionCode.BOARD_NOT_FOUND));
+		if (!boardRepository.existsById(boardId)) {
+			throw new CustomRuntimeException(ExceptionCode.BOARD_NOT_FOUND);
+		}
 
-		return board.getComments().stream()
-			.map(c -> new CommentResponse(c.getCommentId(), c.getContent(), c.getMember().getName()))
-			.collect(Collectors.toList());
+		// fetch join으로 댓글 + 작성자 조회
+		List<Comment> rootComments = commentRepository.findAllByBoardWithMember(boardId);
+
+		// childComments는 CommentResponse 생성 시 매핑
+		return rootComments.stream()
+				.map(CommentResponse::new)
+				.collect(Collectors.toList());
 	}
 }

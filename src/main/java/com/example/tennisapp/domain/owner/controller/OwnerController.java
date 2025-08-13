@@ -42,11 +42,18 @@ public class OwnerController {
 		return ResponseEntity.ok(ApiResponse.of(SuccessCode.SIGNUP_SUCCESS));
 	}
 	//로그인
+//	@PostMapping("/login")
+//	public ResponseEntity<ApiResponse<LoginResponse>> login(@RequestBody LoginRequest request, HttpSession session) {
+//		LoginResponse response = ownerService.login(request, session);
+//		return ResponseEntity.ok(ApiResponse.of(SuccessCode.LOGIN_SUCCESS));
+//	}
+
 	@PostMapping("/login")
-	public ResponseEntity<ApiResponse<LoginResponse>> login(@RequestBody LoginRequest request, HttpSession session) {
-		LoginResponse response = ownerService.login(request, session);
-		return ResponseEntity.ok(ApiResponse.of(SuccessCode.LOGIN_SUCCESS));
+	public ResponseEntity<ApiResponse<LoginResponse>> login(@RequestBody @Valid LoginRequest request, HttpSession session) {
+		LoginResponse loginResponse = ownerService.login(request, session);
+		return ResponseEntity.ok(ApiResponse.of(SuccessCode.LOGIN_SUCCESS, loginResponse));
 	}
+
 
 	//로그아웃
 	@PostMapping("/logout")

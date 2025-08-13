@@ -1,5 +1,6 @@
 package com.example.tennisapp.domain.owner.dto.response;
 
+import com.example.tennisapp.domain.owner.entity.Owner;
 import lombok.Getter;
 
 @Getter
@@ -12,5 +13,9 @@ public class LoginResponse {
 		this.id = id;
 		this.name = name;
 		this.email = email;
+	}
+
+	public static LoginResponse from(Owner owner) {
+		return new LoginResponse(owner.getOwnerId(), owner.getEmail(), owner.getName());
 	}
 }

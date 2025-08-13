@@ -67,10 +67,12 @@ public class OwnerService {
 			throw new CustomRuntimeException(ExceptionCode.PASSWORD_MISMATCH);
 		}
 
-		// 세션에 회원 정보 저장
-		session.setAttribute("LOGIN_OWNER", owner);
-
-		return new LoginResponse(owner.getOwnerId(), owner.getName(), owner.getEmail());
+		session.setAttribute("OWNER_ID", owner.getOwnerId());
+		return new LoginResponse(
+			owner.getOwnerId(),
+			owner.getName(),
+			owner.getEmail()
+		);
 	}
 
 	public void logout(HttpSession session) {

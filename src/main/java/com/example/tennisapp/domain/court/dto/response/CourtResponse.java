@@ -6,11 +6,12 @@ import com.example.tennisapp.domain.courtImage.entity.CourtImage;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
-public class CourtResponse {
+public class CourtResponse implements Serializable {
 
     private final Long courtId;
     private final String name;

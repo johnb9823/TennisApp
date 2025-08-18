@@ -7,6 +7,6 @@ TennisHub는 분산되어 있는 테니스장 예약 시스템을 통합하여, 
 # 기술 스택
 Java17 ,SpringBoot, JPA, MySQL, Redis, AWS S3
 
-#erd
+# erd
 ![ERD](https://raw.githubusercontent.com/johnb9823/TennisHub/main/erd.png)
 
